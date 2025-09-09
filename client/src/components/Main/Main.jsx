@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import User from "./User";
+import UserConfig from "./UserConfig";
 
 export default function Main() {
     const [users, setUsers] = useState([]);
+    const [createUserForm, setCreateUserForm] = useState(false);
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3030/jsonstore/users`);
@@ -11,6 +13,10 @@ export default function Main() {
         };
         fetchData();
     }, [])
+
+    const handleCreateUserForm = () => {
+        setCreateUserForm(!createUserForm);
+    };
     return (
         <main className="main">
             {/* <!-- Section component  --> */}
@@ -185,8 +191,8 @@ export default function Main() {
                 </div>
 
                 {/* <!-- New user button  --> */}
-                <button className="btn-add btn">Add new user</button>
-
+                <button className="btn-add btn" onClick={handleCreateUserForm}>Add new user</button>
+                {createUserForm ? <UserConfig /> : ''};
                 {/* <!-- Pagination component  --> */}
                 <div className="pagination position">
                     <div className="limits">

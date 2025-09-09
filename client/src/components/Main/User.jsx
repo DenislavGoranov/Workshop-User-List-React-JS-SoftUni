@@ -1,5 +1,7 @@
+import { useEffect, useState } from "react";
+
 export default function User({ users }) {
-    console.log(users);
+
 
     return (
         <>
