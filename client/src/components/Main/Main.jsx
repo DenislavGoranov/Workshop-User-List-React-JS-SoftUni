@@ -17,6 +17,7 @@ export default function Main() {
     const handleCreateUserForm = () => {
         setCreateUserForm(!createUserForm);
     };
+
     return (
         <main className="main">
             {/* <!-- Section component  --> */}
@@ -192,7 +193,8 @@ export default function Main() {
 
                 {/* <!-- New user button  --> */}
                 <button className="btn-add btn" onClick={handleCreateUserForm}>Add new user</button>
-                {createUserForm ? <UserConfig /> : ''};
+                {createUserForm && <UserConfig />};
+
                 {/* <!-- Pagination component  --> */}
                 <div className="pagination position">
                     <div className="limits">
