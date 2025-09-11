@@ -1,5 +1,4 @@
 export default function UserInformation({ user }) {
-    { console.log(user) }
     return (
         <>
             <div className="overlay">

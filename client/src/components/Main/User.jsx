@@ -1,5 +1,6 @@
 import { useState } from "react";
 import UserInformation from "./UserInformation";
+import dateConverter from "../../utils/dateConverter.js";
 
 export default function User({ users }) {
     const [userInformation, setUserInformation] = useState([]);
@@ -28,7 +29,7 @@ export default function User({ users }) {
                     <td>{user.lastName}</td>
                     <td>{user.email}</td>
                     <td>{user.phoneNumber}</td>
-                    <td>{user.createdAt}</td>
+                    <td>{dateConverter(user.createdAt)}</td>
 
                     <td className="actions">
                         <button className="btn edit-btn" title="Edit">
