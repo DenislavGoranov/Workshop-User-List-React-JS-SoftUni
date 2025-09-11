@@ -4,14 +4,17 @@ import Pagination from "./pagination/Pagination";
 import Search from './search/Search'
 import UserList from "./user-list/UserList";
 import DetailsUser from "./details-user/DetailsUser";
+import DeleteUser from "./delete-user/DeleteUser";
 
 export default function UserSection() {
     const [users, setUsers] = useState([]);
 
-    const [showUserForm, setShowUserForm] = useState(false);
+    const [showCreateForm, setShowUserForm] = useState(false);
 
     const [showDetailsForm, setShowDetailsForm] = useState(false);
     const [userDataDetails, setUserDataDetails] = useState({});
+
+    const [showDeleteForm, setShowDeleteForm] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -69,6 +72,31 @@ export default function UserSection() {
         setShowDetailsForm(false);
     }
 
+    const openDeleteFormHandler = (userId) => {
+        setShowDeleteForm(true);
+        // try {
+
+        //     await fetch(`http://localhost:3030/jsonstore/users/${userId}`, {
+        //         method: "Delete"
+        //     });
+
+        //     setUsers(oldUsers => oldUsers.filter(oldUsers._id !== userId));
+
+        // } catch (err) {
+        //     console.log(err.message)
+        // } finally {
+        //     setShowDeleteForm(false);
+        // }
+
+    }
+
+    const closeDeleteFormHandler = () => {
+        setShowDeleteForm(false);
+    }
+
+
+
+
     return (
         <section className="card users-container">
             <Search />
@@ -76,6 +104,7 @@ export default function UserSection() {
             <UserList
                 users={users}
                 openUserDetailsHandler={openUserDetailsHandler}
+                openDeleteFormHandler={openDeleteFormHandler}
             />
 
             {showDetailsForm && (
@@ -85,7 +114,11 @@ export default function UserSection() {
                 />
             )}
 
-            {showUserForm && (
+            {showDeleteForm && (
+                <DeleteUser closeDeleteForm={closeDeleteFormHandler} />
+            )}
+
+            {showCreateForm && (
                 <CreateUser
                     onCreateUser={submitCreateUserHandler}
                     onCloseCreateForm={closeCreateUserFormHandler}
