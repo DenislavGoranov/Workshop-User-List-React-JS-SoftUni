@@ -5,6 +5,7 @@ import Search from './search/Search'
 import UserList from "./user-list/UserList";
 import DetailsUser from "./details-user/DetailsUser";
 import DeleteUser from "./delete-user/DeleteUser";
+import Spinner from "../spinner/Spinner";
 
 export default function UserSection() {
     const [users, setUsers] = useState([]);
@@ -17,7 +18,7 @@ export default function UserSection() {
     const [showDeleteForm, setShowDeleteForm] = useState(false);
     const [deleteUserId, setDeleteUserId] = useState(null);
 
-    const [showSpinner, setShowSpinner] = useState(false);
+    const [showSpinner, setShowSpinner] = useState(true);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -28,6 +29,8 @@ export default function UserSection() {
                 setUsers(dataArray)
             } catch (err) {
                 alert(err.message);
+            } finally {
+                setShowSpinner(false);
             }
         };
         fetchData();
@@ -109,6 +112,7 @@ export default function UserSection() {
 
     return (
         <section className="card users-container">
+            {showSpinner && <Spinner />}
             <Search />
 
             <UserList
@@ -146,11 +150,6 @@ export default function UserSection() {
 }
 
 {/* <!-- Overlap components  --> */ }
-
-{/* <!-- <div className="loading-shade"> --> */ }
-{/* <!-- Loading spinner  --> */ }
-{/* <!-- <div className="spinner"></div> --> */ }
-{/* <!-- No users added yet  --> */ }
 
 {/*  <div className="table-overlap">
                                                 <svg
