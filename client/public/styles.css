@@ -327,7 +327,7 @@ ul {
   position: absolute;
   top: calc(50% - 32px);
   left: calc(50% - 32px);
-  z-index: 55;
+  z-index: 555;
 }
 .spinner:after {
   content: '';
