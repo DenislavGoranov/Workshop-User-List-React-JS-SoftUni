@@ -2,7 +2,8 @@ import User from "../User";
 import UserConfig from "../UserConfig";
 
 
-export default function UserSection() {
+export default function UserSection({ users, showUserInfo }) {
+
     return (
         <section className="card users-container">
             {/* <!-- Search bar component --> */}
@@ -169,14 +170,14 @@ export default function UserSection() {
                     </thead>
                     <tbody>
                         {/* <!-- Table row component --> */}
-                        <User users={users} />
+                        {users.map((user) => <User key={user._id} user={user} />)}
                     </tbody>
                 </table>
             </div>
 
             {/* <!-- New user button  --> */}
-            <button className="btn-add btn" onClick={handleCreateUserForm}>Add new user</button>
-            {createUserForm && <UserConfig />};
+            <button className="btn-add btn" onClick={showUserInfo}>Add new user</button>
+            {/* {createUserForm && <UserConfig />}; */}
 
             {/* <!-- Pagination component  --> */}
             <div className="pagination position">
