@@ -3,10 +3,15 @@ import CreateUser from "./create-user/CreateUser";
 import Pagination from "./pagination/Pagination";
 import Search from './search/Search'
 import UserList from "./user-list/UserList";
+import DetailsUser from "./details-user/DetailsUser";
 
 export default function UserSection() {
     const [users, setUsers] = useState([]);
+
     const [showUserForm, setShowUserForm] = useState(false);
+
+    const [showDetailsForm, setShowDetailsForm] = useState(false);
+    const [userDataDetails, setUserDataDetails] = useState({});
 
     useEffect(() => {
         const fetchData = async () => {
@@ -51,15 +56,43 @@ export default function UserSection() {
         setUsers(oldUsers => [...oldUsers, createdUser]);
     }
 
+    const openUserDetailsHandler = async (userId) => {
+        setShowDetailsForm(true);
+
+        const response = await fetch(`http://localhost:3030/jsonstore/users/${userId}`);
+        const user = await response.json();
+
+        setUserDataDetails(user);
+    }
+
+    const closeUserDetailsHandler = () => {
+        setShowDetailsForm(false);
+    }
+
     return (
         <section className="card users-container">
             <Search />
 
-            <UserList users={users} />
+            <UserList
+                users={users}
+                openUserDetailsHandler={openUserDetailsHandler}
+            />
 
-            {showUserForm && <CreateUser onCreateUser={submitCreateUserHandler} onCloseCreateForm={closeCreateUserFormHandler} />}
+            {showDetailsForm && (
+                <DetailsUser
+                    user={userDataDetails}
+                    closeDetailsForm={closeUserDetailsHandler}
+                />
+            )}
 
-            <button className="btn-add btn" onClick={openCreateUserFormHandler}>Add new user</button>
+            {showUserForm && (
+                <CreateUser
+                    onCreateUser={submitCreateUserHandler}
+                    onCloseCreateForm={closeCreateUserFormHandler}
+                />
+            )}
+
+            <button className="btn-add btn" onClick={openCreateUserFormHandler} >Add new user</button>
 
             <Pagination />
         </section>
