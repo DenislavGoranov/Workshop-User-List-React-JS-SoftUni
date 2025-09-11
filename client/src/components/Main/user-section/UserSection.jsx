@@ -1,7 +1,52 @@
 import User from "../User";
+import CreateUser from "./create-user/CreateUser";
 
 
-export default function UserSection({ users }) {
+export default function UserSection() {
+    const [users, setUsers] = useState([]);
+    const [createUserForm, setCreateUserForm] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const response = await fetch(`http://localhost:3030/jsonstore/users`);
+            const data = await response.json();
+            const dataArray = Object.values(data);
+            setUsers(dataArray)
+        };
+        fetchData();
+    }, [])
+
+    const openCreateUserFormHandler = () => {
+        setCreateUserForm(true);
+    };
+
+    useEffect(() => {
+
+    }, [createUserForm]);
+
+    const createUserFormCloseHandler = () => {
+        setCreateUserForm(false);
+    };
+
+    const submitCreateUserHandler = async (event) => {
+        event.preventDefault();
+        const formData = new FormData(event.currentTarget);
+        const userData = Object.fromEntries(formData);
+
+        userData.createdAt = new Date();
+        userData.updatedAt = new Date();
+
+        const response = await fetch(`http://localhost:3030/jsonstore/users`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(userData)
+        });
+        const data = await response.json();
+
+        return data;
+    }
 
     return (
         <section className="card users-container">
@@ -174,8 +219,10 @@ export default function UserSection({ users }) {
                 </table>
             </div>
 
+            {createUserForm && <CreateUser onCreateUser={onCreateUser} />}
+
             {/* <!-- New user button  --> */}
-            <button className="btn-add btn" >Add new user</button>
+            <button className="btn-add btn" onClick={openCreateUser}>Add new user</button>
 
             {/* <!-- Pagination component  --> */}
             <div className="pagination position">

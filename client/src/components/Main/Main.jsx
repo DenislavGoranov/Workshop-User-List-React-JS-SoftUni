@@ -1,29 +1,12 @@
 import { useEffect, useState } from "react";
-import User from "./User";
-import UserConfig from "./UserConfig";
 import UserSection from "./user-section/UserSection";
 
 export default function Main() {
-    const [users, setUsers] = useState([]);
-    const [createUserForm, setCreateUserForm] = useState(false);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(`http://localhost:3030/jsonstore/users`);
-            const data = await response.json();
-            setUsers(Object.values(data))
-        };
-        fetchData();
-    }, [])
-
-    const handleCreateUserForm = () => {
-        setCreateUserForm(!createUserForm);
-    };
 
     return (
         <main className="main">
             {/* <!-- Section component  --> */}
-            <UserSection users={users} />
+            <UserSection />
 
             {/* User details component 
                 <div className="overlay">
