@@ -1,6 +1,10 @@
 import UserListItem from "./user-list-item/UserListItem";
 
-export default function UserList({ users, openUserDetailsHandler }) {
+export default function UserList({
+    users,
+    openUserDetailsHandler,
+    openDeleteFormHandler,
+}) {
     return (
         <div className="table-wrapper">
             {/* <!-- Overlap components  --> */}
@@ -129,7 +133,14 @@ export default function UserList({ users, openUserDetailsHandler }) {
                 </thead>
                 <tbody>
                     {/* <!-- Table row component --> */}
-                    {users.map((user) => <UserListItem key={user._id} user={user} openUserDetails={openUserDetailsHandler} />)}
+                    {users.map((user) =>
+                        <UserListItem
+                            key={user._id}
+                            user={user}
+                            openUserDetails={openUserDetailsHandler}
+                            openDeleteForm={openDeleteFormHandler}
+                        />
+                    )}
                 </tbody>
             </table>
         </div>
