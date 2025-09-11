@@ -26,7 +26,7 @@ export default function UserSection() {
         setShowUserForm(true);
     };
 
-    const createUserFormCloseHandler = () => {
+    const closeCreateUserFormHandler = () => {
         setShowUserForm(false);
     };
 
@@ -45,9 +45,10 @@ export default function UserSection() {
             },
             body: JSON.stringify(userData)
         });
-        const data = await response.json();
+        const createdUser = await response.json();
 
-        return data;
+        setShowUserForm(false);
+        setUsers(oldUsers => [...oldUsers, createdUser]);
     }
 
     return (
@@ -56,7 +57,7 @@ export default function UserSection() {
 
             <UserList users={users} />
 
-            {showUserForm && <CreateUser onCreateUser={submitCreateUserHandler} />}
+            {showUserForm && <CreateUser onCreateUser={submitCreateUserHandler} onCloseCreateForm={closeCreateUserFormHandler} />}
 
             <button className="btn-add btn" onClick={openCreateUserFormHandler}>Add new user</button>
 
