@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import UserSection from "./user-section/UserSection";
 
 export default function Main() {
