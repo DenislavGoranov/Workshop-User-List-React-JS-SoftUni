@@ -1,3 +1,5 @@
+import dateConverter from "../../../../utils/dateConverter";
+
 export default function DetailsUser({ user, closeDetailsForm }) {
     console.log(user);
 
@@ -36,8 +38,8 @@ export default function DetailsUser({ user, closeDetailsForm }) {
                                     <strong> {user.country}, {user.city}, {user.street} {user.streetNumber} </strong>
                                 </p>
 
-                                <p>Created on: <strong>{user.createdAt}</strong></p>
-                                <p>Modified on: <strong>{user.updatedAt}</strong></p>
+                                <p>Created on: <strong>{dateConverter(user.createdAt)}</strong></p>
+                                <p>Modified on: <strong>{dateConverter(user.updatedAt)}</strong></p>
                             </div>
                         </div>
                     </div>
