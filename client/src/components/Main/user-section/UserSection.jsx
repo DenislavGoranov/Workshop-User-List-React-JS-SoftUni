@@ -18,10 +18,12 @@ export default function UserSection() {
     const [showDeleteForm, setShowDeleteForm] = useState(false);
     const [deleteUserId, setDeleteUserId] = useState(null);
 
-    const [showSpinner, setShowSpinner] = useState(true);
+    const [showSpinner, setShowSpinner] = useState(false);
 
     useEffect(() => {
         const fetchData = async () => {
+
+            setShowSpinner(true);
             try {
                 const response = await fetch(`http://localhost:3030/jsonstore/users`);
                 const data = await response.json();
@@ -77,12 +79,20 @@ export default function UserSection() {
     }
 
     const openUserDetailsHandler = async (userId) => {
-        setShowDetailsForm(true);
+        try {
+            setShowSpinner(true);
+            setShowDetailsForm(true);
 
-        const response = await fetch(`http://localhost:3030/jsonstore/users/${userId}`);
-        const user = await response.json();
+            const response = await fetch(`http://localhost:3030/jsonstore/users/${userId}`);
+            const user = await response.json();
 
-        setUserDataDetails(user);
+            setUserDataDetails(user);
+
+        } catch (err) {
+            console.log(err);
+        } finally {
+            setShowSpinner(false);
+        }
     }
 
     const closeUserDetailsHandler = () => {
