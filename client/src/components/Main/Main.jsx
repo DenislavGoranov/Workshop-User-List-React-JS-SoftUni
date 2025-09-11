@@ -23,7 +23,7 @@ export default function Main() {
     return (
         <main className="main">
             {/* <!-- Section component  --> */}
-            <UserSection users={users} showUserInfo={handleCreateUserForm} />
+            <UserSection users={users} />
 
             {/* User details component 
                 <div className="overlay">

@@ -1,4 +1,5 @@
 export default function UserInformation({ user }) {
+
     return (
         <>
             <div className="overlay">

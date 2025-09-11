@@ -1,8 +1,7 @@
 import User from "../User";
-import UserConfig from "../UserConfig";
 
 
-export default function UserSection({ users, showUserInfo }) {
+export default function UserSection({ users }) {
 
     return (
         <section className="card users-container">
@@ -176,8 +175,7 @@ export default function UserSection({ users, showUserInfo }) {
             </div>
 
             {/* <!-- New user button  --> */}
-            <button className="btn-add btn" onClick={showUserInfo}>Add new user</button>
-            {/* {createUserForm && <UserConfig />}; */}
+            <button className="btn-add btn" >Add new user</button>
 
             {/* <!-- Pagination component  --> */}
             <div className="pagination position">
