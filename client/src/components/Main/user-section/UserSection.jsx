@@ -46,23 +46,34 @@ export default function UserSection() {
 
     const submitCreateUserHandler = async (event) => {
         event.preventDefault();
-        const formData = new FormData(event.currentTarget);
-        const userData = Object.fromEntries(formData);
 
-        userData.createdAt = new Date();
-        userData.updatedAt = new Date();
+        setShowSpinner(true);
 
-        const response = await fetch(`http://localhost:3030/jsonstore/users`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(userData)
-        });
-        const createdUser = await response.json();
+        try {
+            const formData = new FormData(event.currentTarget);
+            const userData = Object.fromEntries(formData);
 
-        setShowUserForm(false);
-        setUsers(oldUsers => [...oldUsers, createdUser]);
+            userData.createdAt = new Date();
+            userData.updatedAt = new Date();
+
+            const response = await fetch(`http://localhost:3030/jsonstore/users`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(userData)
+            });
+            const createdUser = await response.json();
+
+            setShowUserForm(false);
+            setUsers(oldUsers => [...oldUsers, createdUser]);
+
+        } catch (err) {
+            console.log(err);
+            setShowUserForm(false);
+        } finally {
+            setShowSpinner(false);
+        }
     }
 
     const openUserDetailsHandler = async (userId) => {
@@ -113,6 +124,7 @@ export default function UserSection() {
     return (
         <section className="card users-container">
             {showSpinner && <Spinner />}
+
             <Search />
 
             <UserList
