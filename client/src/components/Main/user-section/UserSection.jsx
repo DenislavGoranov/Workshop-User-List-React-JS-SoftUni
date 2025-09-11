@@ -15,6 +15,7 @@ export default function UserSection() {
     const [userDataDetails, setUserDataDetails] = useState({});
 
     const [showDeleteForm, setShowDeleteForm] = useState(false);
+    const [deleteUserId, setDeleteUserId] = useState(null);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -74,24 +75,34 @@ export default function UserSection() {
 
     const openDeleteFormHandler = (userId) => {
         setShowDeleteForm(true);
-        // try {
-
-        //     await fetch(`http://localhost:3030/jsonstore/users/${userId}`, {
-        //         method: "Delete"
-        //     });
-
-        //     setUsers(oldUsers => oldUsers.filter(oldUsers._id !== userId));
-
-        // } catch (err) {
-        //     console.log(err.message)
-        // } finally {
-        //     setShowDeleteForm(false);
-        // }
-
+        setDeleteUserId(userId);
     }
 
     const closeDeleteFormHandler = () => {
         setShowDeleteForm(false);
+        setDeleteUserId(null);
+    }
+
+    const deleteUserHandler = async () => {
+        try {
+            const userId = deleteUserId;
+
+            const res = await fetch(`http://localhost:3030/jsonstore/users/${userId}`, {
+                method: "DELETE"
+            });
+
+            if (!res.ok) {
+                throw new Error("Failed to delete user");
+            }
+
+            setUsers(oldUsers => oldUsers.filter((user) => user._id !== userId));
+
+        } catch (err) {
+            console.log(err.message)
+        } finally {
+            setShowDeleteForm(false);
+            setDeleteUserId(null);
+        }
     }
 
 
@@ -115,7 +126,10 @@ export default function UserSection() {
             )}
 
             {showDeleteForm && (
-                <DeleteUser closeDeleteForm={closeDeleteFormHandler} />
+                <DeleteUser
+                    closeDeleteForm={closeDeleteFormHandler}
+                    deleteUser={deleteUserHandler}
+                />
             )}
 
             {showCreateForm && (
