@@ -5,6 +5,7 @@ import UserConfig from "./UserConfig";
 export default function Main() {
     const [users, setUsers] = useState([]);
     const [createUserForm, setCreateUserForm] = useState(false);
+
     useEffect(() => {
         const fetchData = async () => {
             const response = await fetch(`http://localhost:3030/jsonstore/users`);
