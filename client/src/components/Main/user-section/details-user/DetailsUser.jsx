@@ -1,8 +1,6 @@
 import dateConverter from "../../../../utils/dateConverter";
 
 export default function DetailsUser({ user, closeDetailsForm }) {
-    console.log(user);
-
     return (
         <>
             <div className="overlay">

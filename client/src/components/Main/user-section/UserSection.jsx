@@ -105,9 +105,6 @@ export default function UserSection() {
         }
     }
 
-
-
-
     return (
         <section className="card users-container">
             <Search />
