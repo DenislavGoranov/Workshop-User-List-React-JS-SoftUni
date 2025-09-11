@@ -111,6 +111,7 @@ export default function UserSection() {
 
     const deleteUserHandler = async () => {
         try {
+            setShowSpinner(true);
             const userId = deleteUserId;
 
             const res = await fetch(`http://localhost:3030/jsonstore/users/${userId}`, {
@@ -126,6 +127,7 @@ export default function UserSection() {
         } catch (err) {
             console.log(err.message)
         } finally {
+            setShowSpinner(false);
             setShowDeleteForm(false);
             setDeleteUserId(null);
         }
